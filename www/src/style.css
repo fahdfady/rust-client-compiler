@@ -10,7 +10,7 @@ body {
 /* Main container */
 
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 2rem auto;
     padding: 1rem 2rem;
     background: #fff;
@@ -39,8 +39,10 @@ textarea {
     width: 100%;
     height: 200px;
     padding: 0.5rem;
-    font-family: monospace;
+    font-family: 'Courier New', Courier, monospace;
+    /* font-weight: 600; */
     font-size: 1rem;
+    /* font-size: x-large; */
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;

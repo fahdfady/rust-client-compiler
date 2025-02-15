@@ -1,0 +1,25 @@
+{
+    "name": "rust-client-compile",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "keywords": [
+        "webassembly",
+        "wasm",
+        "rust",
+        "webpack"
+    ],
+    "devDependencies": {
+        "typescript": "^5.2.2",
+        "vite": "6.1.0"
+    },
+    "dependencies": {
+        "@bytecodealliance/jco": "^1.9.1",
+        "monaco-editor": "^0.52.2"
+    }
+}
