@@ -1,39 +1,50 @@
-import './style.css'
+import './style.css';
+
+import { setupCompiler } from "./interpeter"
+import * as moncao from 'monaco-editor'
+
+const rootElement = document.querySelector('#root') as HTMLDivElement;
+
+console.log("root element iS::: ",)
+console.log("root element iS::: ", rootElement)
+console.log("root element iS::: ",)
 
 // Vite template header with logos (assumes you have viteLogo.png and typescriptLogo.png in your public folder)
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+rootElement.innerHTML = `
   <div class="container">
     <header>
       <h1>Rust WASM Playground</h1>
       <p>a client-only rust compiler that runs on the browser.</p>
     </header>
     <section class="playground">
-      <textarea id="rust-code" placeholder="Enter your Rust code here"></textarea>
+      <div id="editor"></div>
       <button id="compile-btn">Compile to WASM</button>
       <div id="logs"></div>
     </section>
   </div>
 `
 
+const editorElement = document.getElementById('editor') as HTMLDivElement;
+
+const editor = moncao.editor.create(editorElement, {
+  language: 'rust',
+  theme: 'vs-dark',
+  value: 'fn main() {\n    println!("Hello, world!");\n}'
+});
+
+
 // Set up playground functionality
 const compileBtn = document.querySelector('#compile-btn') as HTMLButtonElement
 const logs = document.querySelector('#logs') as HTMLDivElement
-const rustCodeInput = document.querySelector('#rust-code') as HTMLTextAreaElement
-
-rustCodeInput.addEventListener('keydown', (event) => {
-  if ((event.ctrlKey && event.key === 'Enter') || (event.metaKey && event.key === 'Enter')) {
-    compileBtn.click(); // Simulate a click on the compile button
-  }
-});
 
 compileBtn.addEventListener('click', async () => {
-  logs.textContent = 'Compiling...'
-  const code = rustCodeInput.value
+  const compiler = await setupCompiler();
+  const code = editor.getValue();
   try {
-    const result = await compileRust(code)
-    logs.textContent = result
+    const result = await compiler.Compile();
+    logs.innerHTML = result;
   } catch (error) {
-    logs.textContent = 'Compilation failed: ' + error
+    logs.innerHTML = `Compilation failed: ${error}`;
   }
 })
 
