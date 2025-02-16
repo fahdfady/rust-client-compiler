@@ -40,7 +40,7 @@ header {
 
 #editor {
     width: 100%;
-    min-height: 500px;
+    min-height: 250px;
     /* or any height you want */
     overflow: hidden;
 }

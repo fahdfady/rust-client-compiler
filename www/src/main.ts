@@ -1,7 +1,7 @@
 import './style.css';
 
 import { setupCompiler } from "./interpeter"
-import * as moncao from 'monaco-editor'
+import { initEditor } from './editor';
 
 const rootElement = document.querySelector('#root') as HTMLDivElement;
 
@@ -24,40 +24,19 @@ rootElement.innerHTML = `
   </div>
 `
 
-const editorElement = document.getElementById('editor') as HTMLDivElement;
-
-const editor = moncao.editor.create(editorElement, {
-  language: 'rust',
-  theme: 'vs-dark',
-  value: 'fn main() {\n    println!("Hello, world!");\n}'
-});
-
+const editor = initEditor();
 
 // Set up playground functionality
 const compileBtn = document.querySelector('#compile-btn') as HTMLButtonElement
 const logs = document.querySelector('#logs') as HTMLDivElement
 
 compileBtn.addEventListener('click', async () => {
-  const compiler = await setupCompiler();
   const code = editor.getValue();
+  const compiler = await setupCompiler(code);
   try {
-    const result = await compiler.Compile();
+    const result = await compiler.compile();
     logs.innerHTML = result;
   } catch (error) {
     logs.innerHTML = `Compilation failed: ${error}`;
   }
 })
-
-// Dummy Rust compiler function – replace with real logic as needed.
-function compileRust(code: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (code.trim() === '') {
-        reject('No code provided.')
-      } else {
-        // For now, simply simulate a successful compilation.
-        resolve('Compilation successful!\nWASM module loaded.')
-      }
-    }, 1000)
-  })
-}
