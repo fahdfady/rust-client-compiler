@@ -8,6 +8,7 @@ pkgs.mkShell {
     cargo
     rustfmt
     rust-analyzer
+    libclang
     
     # Required for wasm-pack
     wasm-pack
@@ -26,8 +27,4 @@ pkgs.mkShell {
     openssl
   ];
 
-  # Set up environment variables if needed
-  shellHook = ''
-    export RUSTFLAGS="-C link-arg=-fuse-ld=lld"
-  '';
 }
