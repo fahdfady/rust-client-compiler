@@ -13,7 +13,8 @@ dist-ssr
 *.local
 
 target
-
+pkg
+.bin
 
 # Editor directories and files
 .vscode/*
